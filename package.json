@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/TrunkOfUkuleles/CAPS/issues"
   },
-  "homepage": "https://github.com/TrunkOfUkuleles/CAPS#readme"
+  "homepage": "https://github.com/TrunkOfUkuleles/CAPS#readme",
+  "dependencies": {
+    "faker": "^5.5.3"
+  }
 }
