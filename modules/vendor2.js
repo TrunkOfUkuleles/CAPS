@@ -20,13 +20,13 @@ function order (store, id, customer, address){
 }
 
 setInterval(()=>{
-    let newOrder = order('COOLIOSTUFFS', faker.datatype.uuid(), faker.name.findName(), faker.address.cityName())
+    let newOrder = order('AMAZON.BOMB', faker.datatype.uuid(), faker.name.findName(), faker.address.cityName())
     deliverySystem.emit('ready-for-pickup',  EEVENT('pickup', newOrder))
 }, 5000)
 
 deliverySystem.on('delivery-notice', payload => {
 
-    if (payload.storeName === 'COOLIOSTUFFS'){
+    if (payload.storeName === 'AMAZON.BOMB'){
         console.log("VENDOR: Thank you for delivering " + payload.orderId);
     }
 })

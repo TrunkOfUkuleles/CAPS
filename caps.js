@@ -1,25 +1,30 @@
 'use strict';
 
-const events = require('./events.js');
-let driver = require('./modules/driver.js')
-let start = require('./modules/vendor.js')
+const io = require('socket.io')(3000);
+let deliverySystem = io.of('/caps')
 
+io.on("connect_error", (err) => {
+    console.log(`connect_error due to ${err.message}`);
+  });
 
-console.log("CAN I SEE?")
-start();
-driver();
-events.on('ready-for-pickup', payload =>{
-    console.log("EVENT ", payload)
-
-    events.emit('pickup', payload)
+io.on('connection', socket => {
+    console.log('client:', socket.id);
 })
 
-events.on('picked-up', payload =>{
-    console.log("EVENT ", payload)
-})
+deliverySystem.on('connection', socket => {
 
-events.on('delivered', payload =>{
-    console.log("EVENT ", payload)
+    socket.on('ready-for-pickup', payload => {
+        // emit to whatever you want here
+        console.log("EVENT ", payload)
+        socket.broadcast.emit('pickup', payload);
+    });
 
-    events.emit('delivery-notice', payload)
+    socket.on('picked-up', payload => {
+        console.log("EVENT ", payload)
+    })
+
+    socket.on('delivered', payload => {
+        console.log("EVENT ", payload)
+        socket.broadcast.emit('delivery-notice', payload.payload);
+    })
 })
