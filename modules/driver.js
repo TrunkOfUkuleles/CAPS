@@ -8,7 +8,7 @@ const EEVENT = require('./Event.js')
 let deliverySystem = io.connect(`${HOST}/caps`);
 
 let safer = (pay, idd) =>{
-        console.log("DRIVER: delivered " + idd)
+        console.log("Driver: delivered " + idd)
         deliverySystem.emit('delivered', EEVENT('delivered', pay))
     }
 
@@ -19,8 +19,8 @@ let safe = (pay, idd) =>{
     }
 
 deliverySystem.on('pickup', payload => {
-    let target = payload.payload.orderId
-    setTimeout(safe, 1000, payload.payload, target)
+    let target = payload.orderId
+    setTimeout(safe, 1000, payload, target)
     })
 
 
