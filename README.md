@@ -25,7 +25,7 @@ ran the caps and vendor services along with the driover and noted the results. T
 #### UML / Application Wiring Diagram
 
 11
-![setp1 UML]('./assets/UML.jpg')
+![setp1-UML](./assets/UML.jpg)
 
 12
 ![socket-UML](./assets/UML12.jpg)
