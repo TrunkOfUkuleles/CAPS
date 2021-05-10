@@ -2,6 +2,7 @@
 
 const io = require('socket.io')(3000);
 let deliverySystem = io.of('/caps')
+const { del } = require('httpie');
 const event = require('./modules/Event')
 
 // let track={'COOLIOSTUFFS': {'delivered': []}}
@@ -17,6 +18,7 @@ deliverySystem.on('connection', socket => {
 
         // console.log("=========JOINING: ", track)
         socket.join(room);
+        deliverySystem.to('queue').emit('joined', room)
         // if (track[`${room}`].delivered.length > 0){
         //     deliverySystem.to(room).emit('catchup', track[`${room}`])
         // }
@@ -42,6 +44,7 @@ deliverySystem.on('connection', socket => {
     socket.on('delivered', payload => {
         console.log("EVENT ", event('delivered', payload))
         // track[`${payload.storeName}`].delivered.push(payload)
+        deliverySystem.to('queue').emit('delivered', payload)
         deliverySystem.to(payload.storeName).emit('delivered', payload)
     })
 
